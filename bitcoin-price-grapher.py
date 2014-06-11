@@ -48,7 +48,7 @@ def storeValues(tweets):
     for tweet in tweets:
         words = tweet.text.encode('utf8')
         if len(exp.findall(words))==1:
-            prices[int(tweet.pdate.strftime('%Y%m%d%H%M'))] = float(exp.findall(words)[0])
+            prices[tweet.pdate.strftime('%Y-%m-%d %H:%M')] = float(exp.findall(words)[0])
     return prices
     
 def plotPrices(prices):
@@ -56,9 +56,10 @@ def plotPrices(prices):
     dates = []
     values = []
     for key in keys:
-        dates.append(key)
+        dates.append(datetime.datetime.strptime(key, '%Y-%m-%d %H:%M'))
         values.append(prices[key])
-    pyplot.plot(dates,values,'r-')
+    dates = matplotlib.dates.date2num(dates)
+    pyplot.plot_date(dates,values,'r-')
     pyplot.xlabel('date')
     pyplot.ylabel('value in USD')
     pyplot.show()
