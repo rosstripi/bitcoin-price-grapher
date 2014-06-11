@@ -49,14 +49,8 @@ def storeValues(tweets):
         words = tweet.text.encode('utf8')
         if len(exp.findall(words))==1:
             prices[int(tweet.pdate.strftime('%Y%m%d%H%M'))] = float(exp.findall(words)[0])
-    #for testing purposes
-    """
-    keys = sorted(prices.keys())
-    for k in keys:
-        print str(k)+':'+str(prices[k])
     return prices
-    """
-
+    
 def plotPrices(prices):
     keys = sorted(prices.keys())
     dates = []
